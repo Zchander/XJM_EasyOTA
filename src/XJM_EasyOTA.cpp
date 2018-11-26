@@ -329,7 +329,7 @@ void EasyOTA::loop(unsigned long now) {
 #ifdef ESP8266
 		  WiFi.hostname(_hostname);
 #elif ESP32
-		  WiFi.setHostname(_hostname);
+		  WiFi.setHostname(_hostname.c_str());
 #endif
 			_retries_current = 0;
 			_ap = false;
