@@ -244,7 +244,8 @@ int EasyOTA::scanWifi(unsigned long now)
 			} else {
 				String bestSSID;
 				int32_t bestRSSI = -1000;
-				uint8 bestBSSID[6];
+				// Changed uint8 to uint8_t
+				uint8_t bestBSSID[6];
 				int32_t bestChannel;
 				std::set<String> black_list;
 				bool call_scan = true;
@@ -258,7 +259,9 @@ int EasyOTA::scanWifi(unsigned long now)
 						int32_t chan_scan;
 						bool hidden_scan;
 
-						WiFi.getNetworkInfo(i, ssid_scan, sec_scan, rssi_scan, BSSID_scan, chan_scan, hidden_scan);
+						// Doesn't exist (anymore)??
+						//WiFi.getNetworkInfo(i, ssid_scan, sec_scan, rssi_scan, BSSID_scan, chan_scan, hidden_scan);
+						WiFi.getNetworkInfo(i, ssid_scan, sec_scan, rssi_scan, BSSID_scan, chan_scan);
 						if (call_scan)
 							onScan(ssid_scan, sec_scan, rssi_scan, BSSID_scan, chan_scan, hidden_scan);
 
@@ -276,7 +279,9 @@ int EasyOTA::scanWifi(unsigned long now)
 
 						// skip black-listed networks (those that failed to connect to)
 						if (rssi_scan > bestRSSI && !bl) {
-							if ((sec_scan == ENC_TYPE_NONE && _allowOpen && exhausted) || cap) {
+							// Compiler complained about ENC_TYPE_NONE
+							//if ((sec_scan == ENC_TYPE_NONE && _allowOpen && exhausted) || cap) {
+							if ((sec_scan == WIFI_AUTH_OPEN && _allowOpen && exhausted) || cap) {
 								bestSSID = ssid_scan;
 								bestRSSI = rssi_scan;
 								bestChannel = chan_scan;
