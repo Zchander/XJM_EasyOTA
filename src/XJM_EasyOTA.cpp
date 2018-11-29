@@ -262,6 +262,8 @@ int EasyOTA::scanWifi(unsigned long now)
 						// Doesn't exist (anymore)??
 						//WiFi.getNetworkInfo(i, ssid_scan, sec_scan, rssi_scan, BSSID_scan, chan_scan, hidden_scan);
 						WiFi.getNetworkInfo(i, ssid_scan, sec_scan, rssi_scan, BSSID_scan, chan_scan);
+						// To keep the compiler/linker happy (one less warning)
+						bool hidden_scan = false;
 						if (call_scan)
 							onScan(ssid_scan, sec_scan, rssi_scan, BSSID_scan, chan_scan, hidden_scan);
 
